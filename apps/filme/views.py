@@ -9,6 +9,7 @@ from django.views.generic import TemplateView, ListView, DetailView, FormView, U
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
 from django.views import View
+from django.views.decorators.csrf import csrf_protect
 
 
 class Homepage(FormView):
@@ -30,12 +31,14 @@ class Homepage(FormView):
         else:
             return reverse('filme:criarconta')
 
+@csrf_protect
 class Homefilmes(LoginRequiredMixin, ListView):
     template_name = "homefilmes.html"
     model = Filme
 
     # object_list -> lista de itens do modelo
 
+@csrf_protect
 class Detalhesfilme(LoginRequiredMixin, DetailView):
     template_name = "detalhesfilme.html"
     model = Filme
@@ -62,6 +65,7 @@ class Detalhesfilme(LoginRequiredMixin, DetailView):
         context["filmes_relacionados"] = filmes_relacionados
         return context
 
+@csrf_protect
 class Pesquisafilme(LoginRequiredMixin, ListView):
     template_name = "pesquisa.html"
     model = Filme
@@ -76,6 +80,7 @@ class Pesquisafilme(LoginRequiredMixin, ListView):
         else:
             return None
 
+@csrf_protect
 class Paginaperfil(LoginRequiredMixin, UpdateView):
     template_name = "editarperfil.html"
     model = Usuario

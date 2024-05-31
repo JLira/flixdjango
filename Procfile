@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn hashflix.wsgi --log-file -
+web: npm run build:css && python manage.py migrate && python manage.py runserver 0.0.0.0:$PORT && python manage.py migrate && gunicorn hashflix.wsgi --log-file -
